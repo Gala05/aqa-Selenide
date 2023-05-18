@@ -55,7 +55,9 @@ public class AppCardDeliveryTest {
         $("[data-test-id='phone'] .input__control").setValue("+79879871122");
         $("[data-test-id='agreement']").click();
         $$("[role='button']").filter(Condition.visible).last().click();
-        $(withText("Успешно")).shouldBe(Condition.visible, Duration.ofSeconds(15));
+        String date = $("[data-test-id='date'] [formnovalidate]").getValue();
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + date),
+                Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
 
     @Test
