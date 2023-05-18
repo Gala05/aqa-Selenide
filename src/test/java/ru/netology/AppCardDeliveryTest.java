@@ -16,6 +16,7 @@ public class AppCardDeliveryTest {
     public String generateDate(long addDays, String pattern) {
         return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
     }
+
     String planningDate = generateDate(4, "dd.MM.yyyy");
 
     @Test
@@ -28,8 +29,10 @@ public class AppCardDeliveryTest {
         $("[data-test-id='phone'] .input__control").setValue("+79879871122");
         $("[data-test-id='agreement']").click();
         $$("[role='button']").filter(Condition.visible).last().click();
-        $(withText("Успешно")).shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate),
+                Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
+
     @Test
     void shouldRegisteredNameWithDash() {
         open("http://localhost:9999");
@@ -40,8 +43,10 @@ public class AppCardDeliveryTest {
         $("[data-test-id='phone'] .input__control").setValue("+79879871122");
         $("[data-test-id='agreement']").click();
         $$("[role='button']").filter(Condition.visible).last().click();
-        $(withText("Успешно")).shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate),
+                Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
+
     @Test // дату встречи не трогаем - заполнена по умолчанию
     void shouldRegisteredDateDefault() {
         open("http://localhost:9999");
@@ -52,6 +57,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $(withText("Успешно")).shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
+
     @Test
     void checkingDateWithThePopUpMessage() {
         open("http://localhost:9999");
@@ -63,8 +69,9 @@ public class AppCardDeliveryTest {
         $("[data-test-id='agreement']").click();
         $$("[role='button']").filter(Condition.visible).last().click();
         $(".notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate),
-                        Duration.ofSeconds(15)).shouldBe(Condition.visible);
+                Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
+
     @Test // проверка на пустое поле Город
     void shouldRegisteredEmptyFieldCity() {
         open("http://localhost:9999");
@@ -89,6 +96,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='date']//span[contains(@class, 'input_invalid')]//span[contains(text(), 'Неверно')]").should(Condition.appear);
     }
+
     @Test //проверка на пустое поле Фамилия и имя
     void shouldRegisteredEmptyFieldName() {
         open("http://localhost:9999");
@@ -101,6 +109,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='name' and contains(@class, 'input_invalid')]//span[contains(text(), 'Поле')]").should(Condition.appear);
     }
+
     @Test //пустое поле Номер телефона
     void shouldRegisteredEmptyFieldPhone() {
         open("http://localhost:9999");
@@ -113,6 +122,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='phone' and contains(@class, 'input_invalid')]//span[contains(text(), 'Поле')]").should(Condition.appear);
     }
+
     @Test //не проставлен чек-бокс
     void shouldRegisteredEmptyFieldCheckBox() {
         open("http://localhost:9999");
@@ -139,6 +149,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='city' and contains(@class, 'input_invalid')]//span[contains(text(), 'Доставка')]").should(Condition.appear);
     }
+
     @Test //Дата встречи сегодня
     void shouldRegisteredToday() {
         open("http://localhost:9999");
@@ -164,6 +175,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='date']//span[contains(@class, 'input_invalid')]//span[contains(text(), 'Заказ')]").should(Condition.appear);
     }
+
     @Test //невалидные значения для фамилии латиница
     void shouldRegisteredNameLatin() {
         open("http://localhost:9999");
@@ -189,6 +201,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='name' and contains(@class, 'input_invalid')]//span[contains(text(), 'Допустимы')]").should(Condition.appear);
     }
+
     @Test //пустое поле Номер телефона 10 цифр
     void shouldRegisteredEmptyFieldPhone10Numb() {
         open("http://localhost:9999");
@@ -201,6 +214,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='phone' and contains(@class, 'input_invalid')]//span[contains(text(), 'Телефон')]").should(Condition.appear);
     }
+
     @Test //пустое поле Номер телефона 12 цифр
     void shouldRegisteredEmptyFieldPhone12Numb() {
         open("http://localhost:9999");
@@ -213,6 +227,7 @@ public class AppCardDeliveryTest {
         $$("[role='button']").filter(Condition.visible).last().click();
         $x("//span[@data-test-id='phone' and contains(@class, 'input_invalid')]//span[contains(text(), 'Телефон')]").should(Condition.appear);
     }
+
     @Test //пустое поле Номер телефона без плюса
     void shouldRegisteredEmptyFieldPhoneWhithOutAPlus() {
         open("http://localhost:9999");
