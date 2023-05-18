@@ -10,7 +10,6 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class AppCardDeliveryTestElements {
-
     @Test
     void shouldRegisteredByCalendar() {
         Configuration.holdBrowserOpen = true;
