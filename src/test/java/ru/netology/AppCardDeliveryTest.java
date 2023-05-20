@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppCardDeliveryTest {
     public String generateDate(long addDays, String pattern) {
@@ -135,8 +136,7 @@ public class AppCardDeliveryTest {
         $("[data-test-id='phone'] .input__control").setValue("+79879871122");
         //$("[data-test-id='agreement']").click();
         $$("[role='button']").filter(Condition.visible).last().click();
-        $x("//label[@data-test-id='agreement' and contains(@class, 'input_invalid')]//span[contains(text(), 'Я " +
-                "соглашаюсь')]").shouldBe(Condition.visible);
+        assertTrue($x("//label[@data-test-id='agreement' and contains(@class, 'input_invalid')]").isDisplayed());
     }
 
     @Test
