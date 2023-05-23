@@ -2,6 +2,7 @@ package ru.netology;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -22,18 +23,18 @@ public class AppCardDeliveryTestElements {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] .input__control").setValue("Че");
-        $$(".menu-item__control").first().click();
+        ElementsCollection cities = $$(".menu-item__control");
+        cities.findBy(Condition.exactText("Чебоксары")).click();
         String defaultMonth = generateDate(3,"MM");
         String planningMonth = generateDate(7,"MM");
         String planningDate = generateDate(7, "dd.MM.yyyy");
-        int day = Integer.parseInt(generateDate(7,"dd"));
+        String day = generateDate(7,"dd");
         $(".calendar-input [role='button']").click();
+        ElementsCollection days = $$x("//td[@data-day]");
         if (!defaultMonth.equals(planningMonth)){
             $("[data-step='1']").click();
-            $$x("//td[@data-day]").get(day - 1).click();
-        } else {
-            $$x("//td[@data-day]").get(4).click();
         }
+        days.findBy(Condition.exactText(day)).click();
         $("[data-test-id='name'] .input__control").setValue("Васильев Василий");
         $("[data-test-id='phone'] .input__control").setValue("+79879871122");
         $("[data-test-id='agreement']").click();
