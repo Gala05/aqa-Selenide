@@ -27,13 +27,12 @@ public class AppCardDeliveryTestElements {
         String planningMonth = generateDate(7,"MM");
         String planningDate = generateDate(7, "dd.MM.yyyy");
         int day = Integer.parseInt(generateDate(7,"dd"));
+        $(".calendar-input [role='button']").click();
         if (!defaultMonth.equals(planningMonth)){
-            $(".calendar-input [role='button']").click();
             $("[data-step='1']").click();
             $$x("//td[@data-day]").get(day - 1).click();
         } else {
-            $(".calendar-input [role='button']").click();
-            $$x("//td[contains(@class, 'calendar__day')]").get(day - 1).click();
+            $$x("//td[@data-day]").get(4).click();
         }
         $("[data-test-id='name'] .input__control").setValue("Васильев Василий");
         $("[data-test-id='phone'] .input__control").setValue("+79879871122");
